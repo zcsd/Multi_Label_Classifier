@@ -9,7 +9,7 @@ import cv2
 import os
 import time
 
-mode = 1 # 0 for single image, 1 for batch
+mode = 0 # 0 for single image, 1 for batch
 testset_path = "test"
 model_path = "smallVGG.model"
 labelbin_path = "mlb.pickle"
@@ -64,20 +64,23 @@ def predict(img_path):
     else:
         result = "Wrong"
     
-    print("  Result: {}; Predict Time: {:.2f}s".format(result, time_interval))
+    # print("  Result: {}; Predict Time: {:.2f}s".format(result, time_interval))
+    print("  Result: {}".format(result))
     print("  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     global total_time
     total_time += time_interval
+    
+    # show the probabilities for each of the individual labels
+    for (label, p) in zip(mlb.classes_, proba):
+        print("{}: {:.2f}%".format(label, p * 100))
 
     if mode == 0:
         # show the output image
         cv2.imshow("Output", output)
         cv2.waitKey(0)
-'''
-    # show the probabilities for each of the individual labels
-    for (label, p) in zip(mlb.classes_, proba):
-        print("{}: {:.2f}%".format(label, p * 100))
-'''
+
+
+
 
 if mode == 0:
     image_path = "test/pink_left/w1.jpg"
