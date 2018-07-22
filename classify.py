@@ -41,7 +41,9 @@ def predict(img_path):
     time_start = time.time()
     proba = model.predict(image)[0]
     K.clear_session()
-
+    
+    print(mlb.classes_)
+    print(proba)
     time_end = time.time()
     time_interval = time_end - time_start
 
@@ -80,10 +82,8 @@ def predict(img_path):
         cv2.waitKey(0)
 
 
-
-
 if mode == 0:
-    image_path = "test/pink_left/w1.jpg"
+    image_path = "test/pink_right/w1.jpg"
     predict(image_path)
 elif mode == 1:
     for folder in os.listdir(testset_path):
